@@ -1,0 +1,11 @@
+    )
+ ( /(  (     (                (       (
+ )\()) )\ )  )\ )             )\ )  ( )\    (
+((_)\ (()/( (()/(   (    (   (()/(  )((_)  ))\
+  ((_) /(_)) /(_))  )\   )\   ((_))((_)_  /((_)
+ / _ \(_) _|(_) _| ((_) ((_)  _| |  | _ )(_))
+| (_) ||  _| |  _|/ _ \/ _ \/ _` |  | _ \/ -_)
+ \___/ |_|   |_|  \___/\___/\__,_|  |___/\___|
+${application.title} ${application.version}
+Powered by Spring Boot ${spring-boot.version}
+run on profile ${spring.profiles.active}
