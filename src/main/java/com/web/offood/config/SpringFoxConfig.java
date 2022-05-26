@@ -1,4 +1,4 @@
-package com.web.offood.Config;
+package com.web.offood.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
