@@ -4,5 +4,5 @@ import com.web.offood.service.OfficeService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OfficeServiceImpl implements OfficeService {
+public class OfficeServiceImpl extends BaseService implements OfficeService{
 }
