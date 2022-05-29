@@ -25,6 +25,15 @@ public enum ApiErrorCode {
     EMAIL_OTP_INCORRECT(-22, "Email OTP is incorrect!"),
     PASSWORD_FORMAT_INCORRECT(-23, "Password contain only a-z, A-Z, 0-9, 8 to 30 chars!"),
     USER_VERIFIED(-24, "!"),
+    USERNAME_NOT_EMPTY(-25, "Username not empty"),
+    PASSWORD_NOT_EMPTY(-26, "Password not empty"),
+    INVALID_EMAIL(-27, "Email invalid"),
+    INVALID_USERNAME(-28, "Username invalid"),
+    USERNAME_IN_USE(-29, "Username already in use."),
+    EMAIL_IN_USE(-30, "Email already in use."),
+    EMAIL_REWARD_SUBJECT_INVALID(-31, "Subject is invalid!"),
+    EMAIL_REWARD_CONTENT_INVALID(-32, "Content is invalid!"),
+
 
     ;
 

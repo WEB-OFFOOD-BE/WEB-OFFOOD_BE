@@ -28,5 +28,7 @@ public class BaseService {
     protected RestaurantStatusRepository restaurantStatusRepository;
     @Autowired
     protected StaffRepository staffRepository;
+    @Autowired
+    protected AccountRepository accountRepository;
 
 }

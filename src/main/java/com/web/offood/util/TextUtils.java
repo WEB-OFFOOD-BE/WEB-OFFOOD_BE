@@ -540,10 +540,6 @@ public class TextUtils {
         return refCode.toString().toUpperCase();
     }
 
-    //    public static String md5UpperCase(String text){
-    //        return DigestUtils.md5Hex(text).toUpperCase();
-    //    }
-
     public static Boolean checkPassword(String value) {
         return Pattern.compile(PASSWORD_REGEX).matcher(value).matches();
     }

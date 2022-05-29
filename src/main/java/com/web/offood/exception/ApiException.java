@@ -7,7 +7,7 @@ import com.web.offood.util.TextUtils;
  * @author quanglb Create at 5/26/22
  */
 
-public class ApiException extends RuntimeException {
+public class ApiException extends RuntimeException{
     private String objectName;
     private Object objectValue;
     private ApiErrorCode apiErrorCode;
