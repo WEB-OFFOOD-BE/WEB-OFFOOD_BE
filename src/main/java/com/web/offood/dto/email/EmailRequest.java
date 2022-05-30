@@ -21,7 +21,7 @@ public class EmailRequest {
     private int type;
 
     @Column(columnDefinition = "List of account ids separated by comma")
-    private String accountIds;
+    private String toTarget;
 
     private boolean sendAll;
 

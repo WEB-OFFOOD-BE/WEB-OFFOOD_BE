@@ -5,8 +5,11 @@ import com.web.offood.dto.base.BaseResponse;
 import com.web.offood.dto.base.ResponseBuilder;
 import com.web.offood.dto.user.RegisterRequest;
 import com.web.offood.service.ServiceImpl.AccountService;
+import com.web.offood.service.ServiceImpl.EmailService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.mail.EmailException;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     private final AccountService accountService;
+
+    private final EmailService emailService;
 
     @PostMapping("/login")
     public ResponseEntity<BaseResponse<String>> login(
@@ -31,9 +36,10 @@ public class AccountController {
         return ResponseEntity.ok(
                 ResponseBuilder.ok().with(accountService.signUp(registerRequest)).build());
     }
+
     @PostMapping("/sendMail")
-    public ResponseEntity<BaseResponse<String>> sendMail(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<BaseResponse<String>> sendMail(@Param("email") String email) throws EmailException {
         return ResponseEntity.ok(
-                ResponseBuilder.ok().with(accountService.sendMail(registerRequest)).build());
+                ResponseBuilder.ok().with(emailService.sendMail(email)).build());
     }
 }
