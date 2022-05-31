@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OfficeRepository extends JpaRepository<OfficeInfo, Integer> {
+
+    OfficeInfo findByAccountIdAndStatusId(Integer accountId, Integer statusId);
+
 }

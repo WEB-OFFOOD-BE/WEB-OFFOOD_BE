@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RestaurantRepository extends JpaRepository<RestaurantInfo, Integer> {
+
+    RestaurantInfo findByAccountIdAndStatusId(Integer accountId, Integer statusId);
+
 }

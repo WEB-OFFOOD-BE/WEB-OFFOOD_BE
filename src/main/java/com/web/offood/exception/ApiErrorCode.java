@@ -33,7 +33,9 @@ public enum ApiErrorCode {
     EMAIL_IN_USE(-30, "Email already in use."),
     EMAIL_REWARD_SUBJECT_INVALID(-31, "Subject is invalid!"),
     EMAIL_REWARD_CONTENT_INVALID(-32, "Content is invalid!"),
-
+    GET_OBJECT_REDIS_FAIL(-33, "Get object redis fail"),
+    ERROR_SEND_MAIL(-34, "Lỗi gửi mail"),
+    ACCOUNT_NOT_EXIST(-35, "Tài khoản không tồn tại"),
 
     ;
 

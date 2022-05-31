@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 @Data
 @Builder
 @NoArgsConstructor
@@ -61,4 +60,7 @@ public class RestaurantInfo {
     @Basic
     @Column(name = "business_code")
     private String businessCode;
+    @Basic
+    @Column(name = "account_id")
+    private Integer accountId;
 }

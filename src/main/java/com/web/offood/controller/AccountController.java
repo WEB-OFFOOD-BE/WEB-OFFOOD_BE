@@ -3,13 +3,11 @@ package com.web.offood.controller;
 import com.web.offood.dto.account.SignInRequest;
 import com.web.offood.dto.base.BaseResponse;
 import com.web.offood.dto.base.ResponseBuilder;
+import com.web.offood.dto.email.OTPRequest;
 import com.web.offood.dto.user.RegisterRequest;
 import com.web.offood.service.ServiceImpl.AccountService;
-import com.web.offood.service.ServiceImpl.EmailService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.mail.EmailException;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     private final AccountService accountService;
-
-    private final EmailService emailService;
 
     @PostMapping("/login")
     public ResponseEntity<BaseResponse<String>> login(
@@ -37,9 +33,9 @@ public class AccountController {
                 ResponseBuilder.ok().with(accountService.signUp(registerRequest)).build());
     }
 
-    @PostMapping("/sendMail")
-    public ResponseEntity<BaseResponse<String>> sendMail(@Param("email") String email) throws EmailException {
+    @PostMapping("/verifyAccount")
+    public ResponseEntity<BaseResponse<String>> sendMail(@RequestBody OTPRequest otpRequest){
         return ResponseEntity.ok(
-                ResponseBuilder.ok().with(emailService.sendMail(email)).build());
+                ResponseBuilder.ok().with(accountService.verifyAccount(otpRequest)).build());
     }
 }
