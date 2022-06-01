@@ -1,8 +1,10 @@
 package com.web.offood.service.ServiceImpl;
 
+import com.web.offood.redis.RedisComponent;
 import com.web.offood.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,5 +32,9 @@ public class BaseService {
     protected StaffRepository staffRepository;
     @Autowired
     protected AccountRepository accountRepository;
+    @Autowired
+    protected RedisTemplate<Object, Object> redisTemplate;
+    @Autowired
+    protected RedisComponent redisComponent;
 
 }

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Data
 @Builder
@@ -23,9 +22,6 @@ public class OfficeInfo {
     @Basic
     @Column(name = "name")
     private String name;
-    @Basic
-    @Column(name = "email")
-    private String email;
     @Basic
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -62,4 +58,7 @@ public class OfficeInfo {
     @Basic
     @Column(name = "description")
     private String description;
+    @Basic
+    @Column(name = "account_id")
+    private Integer accountId;
 }
