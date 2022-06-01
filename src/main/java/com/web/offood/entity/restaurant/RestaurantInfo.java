@@ -22,9 +22,6 @@ public class RestaurantInfo {
     @Column(name = "name")
     private String name;
     @Basic
-    @Column(name = "email")
-    private String email;
-    @Basic
     @Column(name = "phone_number")
     private String phoneNumber;
     @Basic
