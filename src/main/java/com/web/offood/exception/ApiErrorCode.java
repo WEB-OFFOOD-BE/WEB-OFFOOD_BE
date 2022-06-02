@@ -36,7 +36,7 @@ public enum ApiErrorCode {
     GET_OBJECT_REDIS_FAIL(-33, "Get object redis fail"),
     ERROR_SEND_MAIL(-34, "Lỗi gửi mail"),
     ACCOUNT_NOT_EXIST(-35, "Tài khoản không tồn tại"),
-
+    PHONE_NUMBER_ALREADY_USE(-37, "Số điện thoại đã được sử dụng"),
     ;
 
     private final Integer errorCode;

@@ -29,17 +29,8 @@ public class OfficeInfo {
     @Column(name = "avatar_url")
     private String avatarUrl;
     @Basic
-    @Column(name = "street_id")
-    private Integer streetId;
-    @Basic
     @Column(name = "tax_code")
     private String taxCode;
-    @Basic
-    @Column(name = "district_id")
-    private Integer districtId;
-    @Basic
-    @Column(name = "city_id")
-    private Integer cityId;
     @Basic
     @Column(name = "create_date")
     private Timestamp createDate;
@@ -61,4 +52,7 @@ public class OfficeInfo {
     @Basic
     @Column(name = "account_id")
     private Integer accountId;
+    @Basic
+    @Column(name = "address")
+    private String address;
 }

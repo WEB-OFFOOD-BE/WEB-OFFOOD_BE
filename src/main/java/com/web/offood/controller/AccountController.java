@@ -3,7 +3,8 @@ package com.web.offood.controller;
 import com.web.offood.dto.account.SignInRequest;
 import com.web.offood.dto.base.BaseResponse;
 import com.web.offood.dto.base.ResponseBuilder;
-import com.web.offood.dto.email.OTPRequest;
+import com.web.offood.dto.email.OTPOfficeRequest;
+import com.web.offood.dto.email.OTPRestaurantRequest;
 import com.web.offood.dto.user.RegisterRequest;
 import com.web.offood.service.ServiceImpl.AccountService;
 import io.swagger.annotations.Api;
@@ -33,9 +34,16 @@ public class AccountController {
                 ResponseBuilder.ok().with(accountService.signUp(registerRequest)).build());
     }
 
-    @PostMapping("/verifyAccount")
-    public ResponseEntity<BaseResponse<String>> sendMail(@RequestBody OTPRequest otpRequest){
+    @PostMapping("/verifyAccountRestaurant")
+    public ResponseEntity<BaseResponse<String>> verifyAccountRestaurant(@RequestBody OTPRestaurantRequest otpRequest){
         return ResponseEntity.ok(
-                ResponseBuilder.ok().with(accountService.verifyAccount(otpRequest)).build());
+                ResponseBuilder.ok().with(accountService.verifyAccountRestaurant(otpRequest)).build());
     }
+
+    @PostMapping("/verifyAccountOffice")
+    public ResponseEntity<BaseResponse<String>> verifyAccountOffice(@RequestBody OTPOfficeRequest otpRequest){
+        return ResponseEntity.ok(
+                ResponseBuilder.ok().with(accountService.verifyAccountOffice(otpRequest)).build());
+    }
+
 }
