@@ -5,6 +5,7 @@ public enum RestaurantStatus {
     ACTIVE_BUT_UNVERIFIED(1),
     ACTIVE(3),
     LOCK(4),
+    WAITING_CONFIRMATION(5),
     ;
     private final Integer active;
 
