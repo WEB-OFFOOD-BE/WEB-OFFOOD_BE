@@ -37,6 +37,8 @@ public enum ApiErrorCode {
     ERROR_SEND_MAIL(-34, "Lỗi gửi mail"),
     ACCOUNT_NOT_EXIST(-35, "Tài khoản không tồn tại"),
     PHONE_NUMBER_ALREADY_USE(-37, "Số điện thoại đã được sử dụng"),
+    DISK_NOT_EXIST(-38, "Món ăn không có trong thực đơn"),
+    DISK_EXIST(-39, "Món đã có trong thực đơn"),
     ;
 
     private final Integer errorCode;

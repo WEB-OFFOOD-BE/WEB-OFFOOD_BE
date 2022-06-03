@@ -1,8 +1,8 @@
 package com.web.offood.service.ServiceImpl;
 
 import com.web.offood.dto.account.SignInRequest;
-import com.web.offood.dto.constant.OfficeStatus;
-import com.web.offood.dto.constant.RestaurantStatus;
+import com.web.offood.dto.constant.status.OfficeStatus;
+import com.web.offood.dto.constant.status.RestaurantStatus;
 import com.web.offood.dto.email.EmailRequest;
 import com.web.offood.dto.email.OTPOfficeRequest;
 import com.web.offood.dto.email.OTPRestaurantRequest;
@@ -17,6 +17,8 @@ import com.web.offood.exception.ApiErrorCode;
 import com.web.offood.exception.ApiException;
 import com.web.offood.redis.RedisKey;
 import com.web.offood.security.JwtTokenProvider;
+import com.web.offood.service.AccountService;
+import com.web.offood.service.BaseService;
 import com.web.offood.util.SendMailUtil;
 import com.web.offood.util.TextUtils;
 import com.web.offood.util.TimeUtils;
@@ -30,15 +32,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class AccountService extends BaseService {
+public class AccountServiceImpl extends BaseService implements AccountService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
 
+    @Override
     public String signIn(SignInRequest signInRequest) {
         signInRequest.validSignIn();
         if (accountRepository.findByUsername(signInRequest.getUsername()) == null) {
@@ -53,6 +55,7 @@ public class AccountService extends BaseService {
     }
 
 
+    @Override
     public String signUp(RegisterRequest registerRequest) {
         registerRequest.validate();
         String email = registerRequest.getEmail().toLowerCase();
@@ -124,22 +127,7 @@ public class AccountService extends BaseService {
         return "OK";
     }
 
-    static char[] randomOTP(int length) {
-
-        String Capital_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String numbers = "0123456789";
-        String values = Capital_chars + numbers;
-        Random random_method = new Random();
-
-        char[] password = new char[length];
-
-        for (int i = 0; i < length; i++) {
-            password[i] =
-                    values.charAt(random_method.nextInt(values.length()));
-        }
-        return password;
-    }
-
+    @Override
     public String verifyAccountRestaurant(OTPRestaurantRequest otpRequest) {
         otpRequest.validate();
         var account = accountRepository.findByEmail(otpRequest.getEmail());
@@ -249,6 +237,7 @@ public class AccountService extends BaseService {
         return "OK";
     }
 
+    @Override
     public String verifyAccountOffice(OTPOfficeRequest otpRequest) {
         otpRequest.validate();
         var account = accountRepository.findByEmail(otpRequest.getEmail());

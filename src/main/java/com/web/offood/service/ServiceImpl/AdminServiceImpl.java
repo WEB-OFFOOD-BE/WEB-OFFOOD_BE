@@ -1,12 +1,14 @@
 package com.web.offood.service.ServiceImpl;
 
 import com.web.offood.dto.admin.RequestRegisterResponse;
-import com.web.offood.dto.constant.OfficeStatus;
-import com.web.offood.dto.constant.RestaurantStatus;
+import com.web.offood.dto.constant.status.OfficeStatus;
+import com.web.offood.dto.constant.status.RestaurantStatus;
 import com.web.offood.entity.office.OfficeInfo;
 import com.web.offood.entity.restaurant.RestaurantInfo;
 import com.web.offood.exception.ApiErrorCode;
 import com.web.offood.exception.ApiException;
+import com.web.offood.service.AdminService;
+import com.web.offood.service.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +16,9 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AdminService extends BaseService {
+public class AdminServiceImpl extends BaseService implements AdminService {
 
+    @Override
     public RequestRegisterResponse getAllRequestRegister() {
 
         List<RestaurantInfo> restaurantInfos = restaurantRepository.findAllByStatusId(RestaurantStatus.WAITING_CONFIRMATION.getValue());
@@ -29,6 +32,7 @@ public class AdminService extends BaseService {
         return resp;
     }
 
+    @Override
     public String approvedRequest(Integer Id) {
         var restaurantInfo = restaurantRepository.findById(Id).orElse(null);
         if (restaurantInfo != null) {
@@ -42,6 +46,7 @@ public class AdminService extends BaseService {
         return "OK";
     }
 
+    @Override
     public String deleteRequest(Integer Id) {
         var restaurantInfo = restaurantRepository.findById(Id).orElse(null);
         if (restaurantInfo != null) {

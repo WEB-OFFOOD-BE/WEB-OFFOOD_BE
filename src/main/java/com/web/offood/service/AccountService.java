@@ -1,0 +1,19 @@
+package com.web.offood.service;
+
+import com.web.offood.dto.account.SignInRequest;
+import com.web.offood.dto.email.OTPOfficeRequest;
+import com.web.offood.dto.email.OTPRestaurantRequest;
+import com.web.offood.dto.user.RegisterRequest;
+
+import java.util.Random;
+
+public interface AccountService {
+
+    String signIn(SignInRequest signInRequest);
+
+    String signUp(RegisterRequest registerRequest);
+
+    String verifyAccountRestaurant(OTPRestaurantRequest otpRequest);
+
+    String verifyAccountOffice(OTPOfficeRequest otpRequest);
+}

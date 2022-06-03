@@ -1,4 +1,4 @@
-package com.web.offood.dto.constant;
+package com.web.offood.dto.constant.type;
 
 public enum EmailLogType {
   SEND_CODE(0),

@@ -5,12 +5,11 @@ import com.web.offood.dto.admin.RequestRegisterResponse;
 import com.web.offood.dto.base.ActionBaseRequest;
 import com.web.offood.dto.base.BaseResponse;
 import com.web.offood.dto.base.ResponseBuilder;
-import com.web.offood.dto.constant.ActionAdmin;
+import com.web.offood.dto.constant.action.ActionAdmin;
 import com.web.offood.exception.ApiErrorCode;
 import com.web.offood.exception.ApiException;
-import com.web.offood.service.ServiceImpl.AdminService;
+import com.web.offood.service.BaseService;
 import com.web.offood.util.UtilsApp;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/admin")
-public class AdminController {
-
-    @Autowired
-    AdminService adminService;
+public class AdminController extends BaseService {
 
     @GetMapping("")
     public ResponseEntity<BaseResponse<RequestRegisterResponse>> getAllRequestRegister() {
@@ -30,16 +26,16 @@ public class AdminController {
     }
 
     @PostMapping("doAction")
-    public ResponseEntity<BaseResponse<Object>> doActionCharacter(
+    public ResponseEntity<BaseResponse<Object>> doActionAdmin(
             @Valid @RequestBody ActionBaseRequest<Object> actionBaseRequest) {
         return ResponseEntity.ok(
-                ResponseBuilder.ok().with(handleGenericActionCharacter(actionBaseRequest)).build());
+                ResponseBuilder.ok().with(handleGenericAction(actionBaseRequest)).build());
     }
 
     /*
      * Generic actions handle for admin.
      * */
-    private Object handleGenericActionCharacter(ActionBaseRequest<Object> request) {
+    private Object handleGenericAction(ActionBaseRequest<Object> request) {
         if (request.getAction() == null) throw new ApiException(ApiErrorCode.ACTION_INVALID);
 
         if (request.getAction().equals(ActionAdmin.APPROVAL_REQUEST.name())) {

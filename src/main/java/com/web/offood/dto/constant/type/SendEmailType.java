@@ -1,4 +1,4 @@
-package com.web.offood.dto.constant;
+package com.web.offood.dto.constant.type;
 
 public enum SendEmailType {
   UNKNOWN(0),

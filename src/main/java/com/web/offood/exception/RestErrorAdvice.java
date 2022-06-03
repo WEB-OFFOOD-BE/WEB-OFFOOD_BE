@@ -6,7 +6,7 @@ package com.web.offood.exception;
 
 import com.web.offood.dto.base.BaseResponse;
 import com.web.offood.dto.base.ResponseBuilder;
-import com.web.offood.dto.constant.ValidateType;
+import com.web.offood.dto.constant.type.ValidateType;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.context.MessageSourceResolvable;

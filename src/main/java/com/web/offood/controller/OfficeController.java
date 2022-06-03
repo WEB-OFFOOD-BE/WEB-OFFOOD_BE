@@ -1,4 +1,6 @@
 package com.web.offood.controller;
 
-public class OfficeController {
+import com.web.offood.service.BaseService;
+
+public class OfficeController extends BaseService {
 }

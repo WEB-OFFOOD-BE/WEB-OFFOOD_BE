@@ -1,4 +1,4 @@
-package com.web.offood.dto.constant;
+package com.web.offood.dto.constant.status;
 
 public enum OfficeStatus {
     DISABLED(1),

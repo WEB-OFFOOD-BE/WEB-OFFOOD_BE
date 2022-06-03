@@ -2,7 +2,7 @@ package com.web.offood.redis;
 
 import com.web.offood.exception.ApiErrorCode;
 import com.web.offood.exception.ApiException;
-import com.web.offood.service.ServiceImpl.BaseService;
+import com.web.offood.service.BaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
