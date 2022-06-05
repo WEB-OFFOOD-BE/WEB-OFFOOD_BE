@@ -2,7 +2,7 @@ package com.web.offood.dto.constant.status;
 
 public enum RestaurantStatus {
     DISABLED(1),
-    ACTIVE_BUT_UNVERIFIED(1),
+    ACTIVE_BUT_UNVERIFIED(2),
     ACTIVE(3),
     LOCK(4),
     WAITING_CONFIRMATION(5),

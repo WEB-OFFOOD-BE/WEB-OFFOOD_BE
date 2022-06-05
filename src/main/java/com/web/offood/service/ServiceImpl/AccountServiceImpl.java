@@ -136,12 +136,11 @@ public class AccountServiceImpl extends BaseService implements AccountService {
             throw new ApiException(ApiErrorCode.EMAIL_NOT_EMPTY);
         }
 
-        var restaurants = restaurantRepository.findAll();
-        for (int i = 0; i <= restaurants.size(); i++) {
-            if (restaurants.get(i).getPhoneNumber().equals(otpRequest.getPhoneNumber())) {
-                throw new ApiException(ApiErrorCode.PHONE_NUMBER_ALREADY_USE);
-            }
+        var restaurants = restaurantRepository.findByPhoneNumber(otpRequest.getPhoneNumber());
+        if (restaurants != null) {
+            throw new ApiException(ApiErrorCode.PHONE_NUMBER_ALREADY_USE);
         }
+
 
         String otp = redisComponent.get(RedisKey.OTP.name(), otpRequest.getEmail());
         if (!otpRequest.getOtp().equals(otp)) {
@@ -150,16 +149,22 @@ public class AccountServiceImpl extends BaseService implements AccountService {
 
         var restaurant =
                 restaurantRepository.findByAccountIdAndStatusId(account.getId(), RestaurantStatus.ACTIVE_BUT_UNVERIFIED.getValue());
-        if (restaurant != null) {
+        if (restaurant == null) {
             throw new ApiException(ApiErrorCode.OBJECT_NOT_FOUND);
         }
 
-        restaurant = RestaurantInfo.builder()
-                .phoneNumber(otpRequest.getPhoneNumber())
-                .description(otpRequest.getDescription())
-                .address(otpRequest.getAddress())
-                .statusId(RestaurantStatus.WAITING_CONFIRMATION.getValue())
-                .build();
+//        restaurant = RestaurantInfo.builder()
+//                .phoneNumber(otpRequest.getPhoneNumber())
+//                .description(otpRequest.getDescription())
+//                .address(otpRequest.getAddress())
+//                .statusId(RestaurantStatus.WAITING_CONFIRMATION.getValue())
+//                .build();
+        restaurant.setPhoneNumber(otpRequest.getPhoneNumber())
+                .setBusinessCode(otpRequest.getCode())
+                .setStatusId(RestaurantStatus.WAITING_CONFIRMATION.getValue())
+                .setAddress(otpRequest.getAddress())
+                .setDescription(otpRequest.getDescription());
+
         restaurantRepository.save(restaurant);
 
         var menu = Menu.builder()

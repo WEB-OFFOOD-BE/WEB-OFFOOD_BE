@@ -4,9 +4,9 @@ import com.web.offood.dto.account.SignInRequest;
 import com.web.offood.dto.email.OTPOfficeRequest;
 import com.web.offood.dto.email.OTPRestaurantRequest;
 import com.web.offood.dto.user.RegisterRequest;
+import org.springframework.stereotype.Service;
 
-import java.util.Random;
-
+@Service
 public interface AccountService {
 
     String signIn(SignInRequest signInRequest);

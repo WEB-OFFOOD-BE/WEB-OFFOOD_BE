@@ -16,7 +16,7 @@ public class SignInRequest {
   private String password;
 
   public void validSignIn() {
-    if (username == null || username.equals("")) throw new ApiException(ApiErrorCode.INVALID_USERNAME);
-    if (password == null || password.equals("")) throw new ApiException(ApiErrorCode.PASSWORD_NOT_EMPTY);
+    if (username == null) throw new ApiException(ApiErrorCode.INVALID_USERNAME);
+    if (password == null) throw new ApiException(ApiErrorCode.PASSWORD_NOT_EMPTY);
   }
 }

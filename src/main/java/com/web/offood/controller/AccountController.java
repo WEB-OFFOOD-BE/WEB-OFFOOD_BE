@@ -38,8 +38,9 @@ public class AccountController extends BaseService {
         if (request.getAction() == null) throw new ApiException(ApiErrorCode.ACTION_INVALID);
 
         if (request.getAction().equals(ActionAccount.LOGIN.name())) {
-            return accountService.signIn(UtilsApp.toTypeRef(request, new TypeReference<>() {
-            }));
+            SignInRequest signInRequest = UtilsApp.toTypeRef(request, new TypeReference<>() {
+            });
+            return accountService.signIn(signInRequest);
         }
         if (request.getAction().equals(ActionAccount.SIGNUP.name())) {
             return accountService.signUp(UtilsApp.toTypeRef(request, new TypeReference<>() {
