@@ -9,6 +9,7 @@ import com.web.offood.exception.ApiErrorCode;
 import com.web.offood.exception.ApiException;
 import com.web.offood.service.BaseService;
 import com.web.offood.service.RestaurantService;
+import com.web.offood.util.TimeUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class RestaurantServiceImpl extends BaseService implements RestaurantServ
 
         var restaurantInfo = restaurantRepository.findById(restaurantId).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
         var account = accountRepository.findById(restaurantInfo.getAccountId()).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
-        var menu = menuRepository.findAllByRestaurantIdAndIsActive(restaurantId, RestaurantStatus.ACTIVE.getValue());
+        var menu = menuRepository.findAllByRestaurantId(restaurantId);
 
         RestaurantDetailResponse response = RestaurantDetailResponse.builder()
                 .address(restaurantInfo.getAddress())
@@ -62,16 +63,16 @@ public class RestaurantServiceImpl extends BaseService implements RestaurantServ
         return "OK";
     }
 
-    @Override
-    public MenuDetailResponse getMenuDetail(Integer id) {
-        var menu = menuRepository.findById(id).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
-        var disks = diskInfoRepository.findAllByMenuId(id);
-        MenuDetailResponse response = MenuDetailResponse.builder()
-                .id(menu.getId())
-                .diskInfos(disks)
-                .build();
-        return response;
-    }
+//    @Override
+//    public MenuDetailResponse getMenuDetail(Integer id) {
+//        var menu = menuRepository.findById(id).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
+//        var disks = diskInfoRepository.findAllByMenuId(id);
+//        MenuDetailResponse response = MenuDetailResponse.builder()
+//                .id(menu.getId())
+//                .diskInfos(disks)
+//                .build();
+//        return response;
+//    }
 
     @Override
     public String unselectedDisk(ChooseDiskRequest request) {
@@ -97,15 +98,43 @@ public class RestaurantServiceImpl extends BaseService implements RestaurantServ
         return "OK";
     }
 
-    public List<DiskInfo> getAllDisks(){
+    public List<DiskInfo> getAllDisks() {
         return diskInfoRepository.findAll();
     }
 
-    public String updateDisk(updateDiskRequest request){
+    public String updateDisk(updateDiskRequest request) {
         request.validate();
         var disk = diskInfoRepository.findById(request.getId()).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
-
+        disk = DiskInfo.builder()
+                .foodName(request.getName())
+                .price(request.getPrice())
+                .imageUrl(request.getImageUrl())
+                .updateDate(TimeUtils.convertToTimestamp())
+                .description(request.getDescription())
+                .build();
+        diskInfoRepository.save(disk);
         return "OK";
     }
+
+    public List<RestaurantInfo> getAllRestaurantActivated() {
+        return restaurantRepository.findByStatusId(RestaurantStatus.ACTIVE.getValue());
+    }
+
+    public List<RestaurantInfo> getAllRestaurantWaitingConfirmation() {
+        return restaurantRepository.findByStatusId(RestaurantStatus.WAITING_CONFIRMATION.getValue());
+    }
+
+    public List<RestaurantInfo> getAllRestaurantLock() {
+        return restaurantRepository.findByStatusId(RestaurantStatus.LOCK.getValue());
+    }
+
+    public List<RestaurantInfo> getAllRestaurantUnverified() {
+        return restaurantRepository.findByStatusId(RestaurantStatus.ACTIVE_BUT_UNVERIFIED.getValue());
+    }
+
+    public List<RestaurantInfo> getAllRestaurant() {
+        return restaurantRepository.findAll();
+    }
+
 
 }

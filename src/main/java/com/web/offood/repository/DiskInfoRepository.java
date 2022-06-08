@@ -4,9 +4,7 @@ import com.web.offood.entity.restaurant.DiskInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface DiskInfoRepository extends JpaRepository<DiskInfo, Integer> {
-    List<DiskInfo> findAllByMenuId(Integer menuId);
+//    List<DiskInfo> findAllByMenuId(Integer menuId);
 }

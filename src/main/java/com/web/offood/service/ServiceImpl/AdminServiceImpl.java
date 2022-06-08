@@ -58,5 +58,4 @@ public class AdminServiceImpl extends BaseService implements AdminService {
         return "OK";
     }
 
-
 }

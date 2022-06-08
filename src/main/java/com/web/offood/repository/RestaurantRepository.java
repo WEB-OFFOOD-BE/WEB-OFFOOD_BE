@@ -15,4 +15,8 @@ public interface RestaurantRepository extends JpaRepository<RestaurantInfo, Inte
 
     RestaurantInfo findByPhoneNumber(String phoneNumber);
 
+    List<RestaurantInfo> findByStatusId( Integer statusId);
+
+    RestaurantInfo findByAccountId(Integer accountId);
+
 }

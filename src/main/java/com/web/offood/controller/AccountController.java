@@ -2,6 +2,7 @@ package com.web.offood.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.web.offood.dto.account.SignInRequest;
+import com.web.offood.dto.account.SignInResponse;
 import com.web.offood.dto.base.ActionBaseRequest;
 import com.web.offood.dto.base.BaseResponse;
 import com.web.offood.dto.base.ResponseBuilder;
@@ -60,7 +61,7 @@ public class AccountController extends BaseService {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<BaseResponse<String>> login(
+    public ResponseEntity<BaseResponse<SignInResponse>> login(
             @RequestBody SignInRequest signInRequest) {
         return ResponseEntity.ok(
                 ResponseBuilder.ok().with(accountService.signIn(signInRequest)).build());

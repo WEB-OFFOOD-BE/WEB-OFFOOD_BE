@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 @Data
 @Builder
 @NoArgsConstructor
@@ -19,9 +18,6 @@ public class DiskInfo {
     @Id
     @Column(name = "id")
     private Integer id;
-    @Basic
-    @Column(name = "menu_id")
-    private Integer menuId;
     @Basic
     @Column(name = "food_name")
     private String foodName;

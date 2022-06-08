@@ -39,6 +39,8 @@ public enum ApiErrorCode {
     PHONE_NUMBER_ALREADY_USE(-37, "Số điện thoại đã được sử dụng"),
     DISK_NOT_EXIST(-38, "Món ăn không có trong thực đơn"),
     DISK_EXIST(-39, "Món đã có trong thực đơn"),
+    ACCOUNT_WAITING_CONFIRMATION(-39, "Tài khoản của bạn đang chờ xác nhận hoặc đã bị khoá"),
+    MENU_NULL(-40, "Thực đơn đang rỗng"),
     ;
 
     private final Integer errorCode;

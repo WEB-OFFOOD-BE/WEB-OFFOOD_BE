@@ -14,8 +14,9 @@ import lombok.NoArgsConstructor;
 public class updateDiskRequest {
     private Integer id;
     private String name;
-    private Double price;
+    private Float price;
     private String imageUrl;
+    private String description;
 
     public void validate(){
         if (id == null || name == null || price == null || imageUrl == null) throw new ApiException(ApiErrorCode.INPUT_INVALID);

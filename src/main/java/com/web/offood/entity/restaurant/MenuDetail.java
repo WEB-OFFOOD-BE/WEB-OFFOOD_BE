@@ -24,5 +24,4 @@ public class MenuDetail {
     @Basic
     @Column(name = "disk_id")
     private Integer diskId;
-
 }

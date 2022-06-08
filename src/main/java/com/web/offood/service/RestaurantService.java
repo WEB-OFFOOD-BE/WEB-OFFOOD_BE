@@ -11,7 +11,7 @@ public interface RestaurantService {
 
     String changeAvatar(ChangeAvatarRequest request);
 
-    MenuDetailResponse getMenuDetail(Integer id);
+//    MenuDetailResponse getMenuDetail(Integer id);
 
     String unselectedDisk(ChooseDiskRequest request);
 
