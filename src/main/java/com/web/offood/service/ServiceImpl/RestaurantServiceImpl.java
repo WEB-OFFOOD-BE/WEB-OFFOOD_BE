@@ -12,6 +12,7 @@ import com.web.offood.service.RestaurantService;
 import com.web.offood.util.TimeUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -136,5 +137,62 @@ public class RestaurantServiceImpl extends BaseService implements RestaurantServ
         return restaurantRepository.findAll();
     }
 
+    public String createOrUpdateDisk(DiskInfoRequest infoRequest) {
+        infoRequest.validate();
+        var menu = menuRepository.findById(infoRequest.getMenuId()).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
+        var disk = diskInfoRepository.findById(infoRequest.getId()).orElse(null);
 
+        if (disk != null) {
+            disk.setDescription(infoRequest.getDescription())
+                    .setFoodName(infoRequest.getFoodName())
+                    .setUpdateDate(TimeUtils.convertToTimestamp())
+                    .setImageUrl(infoRequest.getImageUrl())
+                    .setPrice(infoRequest.getPrice());
+            diskInfoRepository.save(disk);
+        } else {
+            disk = DiskInfo.builder()
+                    .createDate(TimeUtils.convertToTimestamp())
+                    .description(infoRequest.getDescription())
+                    .foodName(infoRequest.getFoodName())
+                    .updateDate(TimeUtils.convertToTimestamp())
+                    .imageUrl(infoRequest.getImageUrl())
+                    .price(infoRequest.getPrice())
+                    .isActive(true)
+                    .build();
+            diskInfoRepository.save(disk);
+            menuDetailRepository.save(MenuDetail.builder()
+                    .menuId(menu.getId())
+                    .diskId(disk.getId())
+                    .is_selected(false)
+                    .build());
+        }
+        return "OK";
+    }
+
+    public List<DiskInfo> getDisksByMenu(Integer menuId){
+        var menu = menuDetailRepository.findByMenuId(menuId);
+        if(menu.size() == 0){
+            throw new ApiException(ApiErrorCode.OBJECT_NOT_FOUND);
+        }
+        List<DiskInfo> diskInfos = new ArrayList<>();
+        for (int i = 0; i <= menu.size(); i++){
+            var diskInfo = diskInfoRepository.findById(menu.get(i).getDiskId()).orElse(null);
+            diskInfos.add(diskInfo);
+        }
+        return diskInfos;
+    }
+    public String deleteDiskInMenu(Integer menuId){
+        var item = menuDetailRepository.findById(menuId).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
+        menuDetailRepository.delete(item);
+        return "OK";
+    }
+
+    public String addDiskOnMenu(Integer menuId, Integer diskId){
+        var menu = menuRepository.findById(menuId).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
+        if (menuDetailRepository.findByMenuIdAndDiskId(menuId, diskId) != null){
+         throw new ApiException(ApiErrorCode.DISK_EXIST);
+        }
+        //:todo add disk on menu
+        return "OK";
+    }
 }
