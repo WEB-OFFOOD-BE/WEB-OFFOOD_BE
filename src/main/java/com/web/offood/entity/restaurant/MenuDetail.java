@@ -24,4 +24,7 @@ public class MenuDetail {
     @Basic
     @Column(name = "disk_id")
     private Integer diskId;
+    @Basic
+    @Column(name = "isSelected")
+    private Boolean is_selected;
 }

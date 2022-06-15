@@ -4,6 +4,7 @@ import com.web.offood.exception.ApiErrorCode;
 import com.web.offood.exception.ApiException;
 import com.web.offood.util.TextUtils;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import javax.persistence.Column;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class EmailRequest {
 
     private String subject;
