@@ -1,5 +1,6 @@
 package com.web.offood.service.ServiceImpl;
 
+import com.web.offood.dto.admin.ApprovedRequest;
 import com.web.offood.dto.admin.RequestRegisterResponse;
 import com.web.offood.dto.constant.status.OfficeStatus;
 import com.web.offood.dto.constant.status.RestaurantStatus;
@@ -24,8 +25,8 @@ public class AdminServiceImpl extends BaseService implements AdminService {
     @Override
     public RequestRegisterResponse getAllRequestRegister() {
 
-        List<RestaurantInfo> restaurantInfos = restaurantRepository.findAllByStatusId(RestaurantStatus.WAITING_CONFIRMATION.getValue());
-        List<OfficeInfo> officeInfos = officeRepository.findAllByStatusId(RestaurantStatus.WAITING_CONFIRMATION.getValue());
+        List<RestaurantInfo> restaurantInfos = restaurantRepository.findAllByStatusIdAndIsActive(RestaurantStatus.WAITING_CONFIRMATION.getValue(), true);
+        List<OfficeInfo> officeInfos = officeRepository.findAllByStatusIdAndIsActive(RestaurantStatus.WAITING_CONFIRMATION.getValue(), true);
 
         var resp = RequestRegisterResponse.builder()
                 .restaurantInfos(restaurantInfos)
@@ -36,8 +37,23 @@ public class AdminServiceImpl extends BaseService implements AdminService {
     }
 
     @Override
-    public String approvedRequest(Integer Id) {
-        var restaurantInfo = restaurantRepository.findById(Id).orElse(null);
+    public RequestRegisterResponse getAllRequest() {
+
+        List<RestaurantInfo> restaurantInfos = restaurantRepository.findAllByIsActive(true);
+        List<OfficeInfo> officeInfos = officeRepository.findAllByIsActive(true);
+
+        var resp = RequestRegisterResponse.builder()
+                .restaurantInfos(restaurantInfos)
+                .officeInfos(officeInfos)
+                .build();
+
+        return resp;
+    }
+
+    @Override
+    public String approvedRequest(ApprovedRequest request) {
+        request.validate();
+        var restaurantInfo = restaurantRepository.findByIdAndIsActive(request.getId(), true);
         if (restaurantInfo != null) {
             var account = accountRepository.findById(restaurantInfo.getAccountId()).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
             restaurantInfo.setStatusId(RestaurantStatus.ACTIVE.getValue());
@@ -55,7 +71,10 @@ public class AdminServiceImpl extends BaseService implements AdminService {
             }
             return "OK";
         }
-        var office = officeRepository.findById(Id).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
+        var office = officeRepository.findByIdAndIsActive(request.getId(), true);
+        if (office == null){
+            throw new ApiException(ApiErrorCode.OBJECT_NOT_FOUND);
+        }
         var account = accountRepository.findById(office.getAccountId()).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
         office.setStatusId(OfficeStatus.ACTIVE.getValue());
         officeRepository.save(office);
@@ -74,10 +93,13 @@ public class AdminServiceImpl extends BaseService implements AdminService {
     }
 
     @Override
-    public String deleteRequest(Integer Id) {
-        var restaurantInfo = restaurantRepository.findById(Id).orElse(null);
+    public String deleteRequest(ApprovedRequest request) {
+        request.validate();
+        var restaurantInfo = restaurantRepository.findByIdAndIsActive(request.getId(), true);
         if (restaurantInfo != null) {
             var account = accountRepository.findById(restaurantInfo.getAccountId()).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
+            restaurantInfo.setIsActive(false);
+            restaurantRepository.save(restaurantInfo);
             //send mail
             EmailRequest emailRequest = EmailRequest.builder()
                     .subject("Cập nhật trạng thái!")
@@ -89,12 +111,16 @@ public class AdminServiceImpl extends BaseService implements AdminService {
             } catch (EmailException e) {
                 e.printStackTrace();
             }
-            restaurantRepository.delete(restaurantInfo);
+
             return "OK";
         }
-        var office = officeRepository.findById(Id).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
+        var office = officeRepository.findByIdAndIsActive(request.getId(), true);
+        if (office == null){
+            throw new ApiException(ApiErrorCode.OBJECT_NOT_FOUND);
+        }
         var account = accountRepository.findById(office.getAccountId()).orElseThrow(() -> new ApiException(ApiErrorCode.OBJECT_NOT_FOUND));
-        officeRepository.delete(office);
+        office.setIsActive(false);
+        officeRepository.save(office);
         //send mail
         EmailRequest emailRequest = EmailRequest.builder()
                 .subject("Cập nhật trạng thái!")

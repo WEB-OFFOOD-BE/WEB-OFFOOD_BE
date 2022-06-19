@@ -11,5 +11,9 @@ public interface OfficeRepository extends JpaRepository<OfficeInfo, Integer> {
 
     OfficeInfo findByAccountIdAndStatusId(Integer accountId, Integer statusId);
 
-    List<OfficeInfo> findAllByStatusId(Integer statusId);
+    List<OfficeInfo> findAllByStatusIdAndIsActive(Integer statusId,Boolean isActive);
+
+    OfficeInfo findByIdAndIsActive(Integer id, Boolean isActive);
+
+    List<OfficeInfo> findAllByIsActive(Boolean isActive);
 }

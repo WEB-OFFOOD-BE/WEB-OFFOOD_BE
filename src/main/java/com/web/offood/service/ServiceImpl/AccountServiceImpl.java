@@ -117,6 +117,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
                     .description("Mô tả")
                     .ratePoint(0.0)
                     .phoneNumber("0")
+                    .isActive(true)
                     .build();
             restaurantRepository.save(restaurantInfo);
         }
@@ -124,6 +125,12 @@ public class AccountServiceImpl extends BaseService implements AccountService {
             OfficeInfo officeInfo = OfficeInfo.builder()
                     .name(registerRequest.getName())
                     .accountId(account.getId())
+                    .avatarUrl("")
+                    .createDate(TimeUtils.convertToTimestamp())
+                    .taxCode("0")
+                    .description("Mô tả")
+                    .phoneNumber("0")
+                    .isActive(true)
                     .statusId(OfficeStatus.ACTIVE_BUT_UNVERIFIED.getValue())
                     .build();
             officeRepository.save(officeInfo);

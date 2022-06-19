@@ -56,4 +56,7 @@ public class RestaurantInfo {
     @Basic
     @Column(name = "account_id")
     private Integer accountId;
+    @Basic
+    @Column(name = "is_active")
+    private Boolean isActive;
 }

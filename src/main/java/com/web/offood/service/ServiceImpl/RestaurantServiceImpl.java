@@ -116,22 +116,22 @@ public class RestaurantServiceImpl extends BaseService implements RestaurantServ
 
     @Override
     public List<RestaurantInfo> getAllRestaurantActivated() {
-        return restaurantRepository.findByStatusId(RestaurantStatus.ACTIVE.getValue());
+        return restaurantRepository.findAllByStatusIdAndIsActive(RestaurantStatus.ACTIVE.getValue(), true);
     }
 
     @Override
     public List<RestaurantInfo> getAllRestaurantWaitingConfirmation() {
-        return restaurantRepository.findByStatusId(RestaurantStatus.WAITING_CONFIRMATION.getValue());
+        return restaurantRepository.findAllByStatusIdAndIsActive(RestaurantStatus.WAITING_CONFIRMATION.getValue(), true);
     }
 
     @Override
     public List<RestaurantInfo> getAllRestaurantLock() {
-        return restaurantRepository.findByStatusId(RestaurantStatus.LOCK.getValue());
+        return restaurantRepository.findAllByStatusIdAndIsActive(RestaurantStatus.LOCK.getValue(), true);
     }
 
     @Override
     public List<RestaurantInfo> getAllRestaurantUnverified() {
-        return restaurantRepository.findByStatusId(RestaurantStatus.ACTIVE_BUT_UNVERIFIED.getValue());
+        return restaurantRepository.findAllByStatusIdAndIsActive(RestaurantStatus.ACTIVE_BUT_UNVERIFIED.getValue(), true);
     }
 
     @Override

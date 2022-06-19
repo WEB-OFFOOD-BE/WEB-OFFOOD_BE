@@ -11,12 +11,16 @@ public interface RestaurantRepository extends JpaRepository<RestaurantInfo, Inte
 
     RestaurantInfo findByAccountIdAndStatusId(Integer accountId, Integer statusId);
 
-    List<RestaurantInfo> findAllByStatusId(Integer statusId);
+    List<RestaurantInfo> findAllByStatusIdAndIsActive(Integer statusId, Boolean isActive);
 
     RestaurantInfo findByPhoneNumber(String phoneNumber);
 
     List<RestaurantInfo> findByStatusId( Integer statusId);
 
     RestaurantInfo findByAccountId(Integer accountId);
+
+    RestaurantInfo findByIdAndIsActive(Integer id, Boolean isActive);
+
+    List<RestaurantInfo> findAllByIsActive( Boolean isActive);
 
 }

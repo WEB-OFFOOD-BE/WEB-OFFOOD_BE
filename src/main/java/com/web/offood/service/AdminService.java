@@ -1,11 +1,14 @@
 package com.web.offood.service;
 
+import com.web.offood.dto.admin.ApprovedRequest;
 import com.web.offood.dto.admin.RequestRegisterResponse;
 
 public interface AdminService {
     RequestRegisterResponse getAllRequestRegister();
 
-    String approvedRequest(Integer Id);
+    RequestRegisterResponse getAllRequest();
 
-    String deleteRequest(Integer Id);
+    String approvedRequest(ApprovedRequest request);
+
+    String deleteRequest(ApprovedRequest request);
 }

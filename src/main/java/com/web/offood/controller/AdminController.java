@@ -28,6 +28,12 @@ public class AdminController extends BaseService {
                 ResponseBuilder.ok().with(adminService.getAllRequestRegister()).build());
     }
 
+    @GetMapping("getAllRequest")
+    public ResponseEntity<BaseResponse<RequestRegisterResponse>> getAllRequest() {
+        return ResponseEntity.ok(
+                ResponseBuilder.ok().with(adminService.getAllRequest()).build());
+    }
+
     @GetMapping("getAllRestaurantLock")
     public ResponseEntity<BaseResponse<List<RestaurantInfo>>> getAllRestaurantLock() {
         return ResponseEntity.ok(
