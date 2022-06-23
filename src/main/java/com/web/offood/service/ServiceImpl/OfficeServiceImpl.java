@@ -1,6 +1,5 @@
 package com.web.offood.service.ServiceImpl;
 
-import com.web.offood.dto.constant.status.OfficeStatus;
 import com.web.offood.dto.office.AddStaffRequest;
 import com.web.offood.dto.office.OfficeDetailResponse;
 import com.web.offood.entity.office.OfficeInfo;
@@ -16,24 +15,25 @@ import java.util.List;
 
 @Service
 public class OfficeServiceImpl extends BaseService implements OfficeService {
+
     @Override
     public List<OfficeInfo> getAllOfficeActivated() {
-        return officeRepository.findAllByStatusId(OfficeStatus.ACTIVE.getValue());
+        return null;
     }
 
     @Override
     public List<OfficeInfo> getAllOfficeUnverified() {
-        return officeRepository.findAllByStatusId(OfficeStatus.ACTIVE_BUT_UNVERIFIED.getValue());
+        return null;
     }
 
     @Override
     public List<OfficeInfo> getAllOfficeLock() {
-        return officeRepository.findAllByStatusId(OfficeStatus.LOCK.getValue());
+        return null;
     }
 
     @Override
     public List<OfficeInfo> getAllOfficeWaitingConfirm() {
-        return officeRepository.findAllByStatusId(OfficeStatus.ACTIVE_BUT_UNVERIFIED.getValue());
+        return null;
     }
 
     @Override
