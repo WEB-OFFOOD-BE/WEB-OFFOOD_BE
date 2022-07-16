@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html  lang="en">
+
+<head th:replace="fragments :: html_head">
+</head>
+
+<body class="sb-nav-fixed">
+<nav th:replace="fragments :: html_nav" class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+
+</nav>
+
+<div id="layoutSidenav">
+  <div th:replace="fragments :: html_menu" id="layoutSidenav_nav">
+
+  </div>
+
+  <div id="layoutSidenav_content">
+    <main>
+      <div class="container-fluid px-4">
+        <h1 class="mt-4">Danh sách nhân viên</h1>
+        <div class="card mb-4">
+          <div class="card-header">
+            <div th:if="${msg == 'success'}" class="alert alert-success">
+              <strong>Thành công!</strong>
+            </div>
+            <div th:if="${msg == 'error'}" class="alert alert-danger">
+              <strong>Nhân viên đang nhận việc. Không thể xóa !</strong>
+            </div>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalAdd">
+              Thêm mới
+            </button>
+            <!-- Modal Add-->
+            <div class="modal fade" id="exampleModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelll">Thêm mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form th:action="@{/user/employee-add}" method="post" enctype="multipart/form-data">
+                      <div class="row">
+                        <div class="col-6">
+                          <label for="addname"
+                                 class="col-form-label">Họ và tên:</label>
+                          <input type="text" class="form-control"
+                                 id="addname" name="fullname" required>
+                        </div>
+                        <div class="col-6">
+                          <label for="addcost"
+                                 class="col-form-label">Email:</label>
+                          <input type="email" class="form-control"
+                                 id="addcost" name="email" required>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">
+                          <label for="addname"
+                                 class="col-form-label">Số điện thoại:</label>
+                          <input type="number" class="form-control"
+                                 id="addname" name="sdt" required>
+                        </div>
+                        <div class="col-6">
+                          <label for="addcost"
+                                 class="col-form-label">Vai trò:</label>
+                          <input type="text" class="form-control"
+                                 id="addcost" name="diachi" value="Nhân viên" readonly>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6">
+                          <label for="addname"
+                                 class="col-form-label">Tài khoản:</label>
+                          <input type="text" class="form-control"
+                                 id="addname" name="taikhoan" required>
+                        </div>
+                        <div class="col-6">
+                          <label for="addcost"
+                                 class="col-form-label">Mật khẩu:</label>
+                          <input type="password" class="form-control"
+                                 id="addcost" name="matkhau" required>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save </button>
+                      </div>
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- Modal Add-->
+          </div>
+          <div class="card-body">
+            <table id="datatablesSimple">
+              <thead>
+              <tr style="background-color: gray !important;">
+                <th>STT</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Tài khoản</th>
+                <th>Mật khẩu</th>
+                <th>Hành động</th>
+              </tr>
+              </thead>
+              <tbody>
+              <input type="hidden" th:value="${list.size()}" id="dodai" />
+              <th:block th:each="category,index  : ${list}">
+                <tr>
+                  <td th:text="${index.index +1}"></td>
+                  <td th:text="${category.fullName}"></td>
+                  <td th:text="${category.email}"></td>
+                  <td th:text="${category.phoneNumber}"></td>
+                  <td th:text="${category.userName}"></td>
+                  <td th:text="${category.password}"></td>
+                  <td>
+                    <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            th:data-bs-target="'#exampleModal'+${category.id}">
+                      Sửa
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#idModelDel'+${category.id}" >
+                      Xóa
+                    </button>
+                    <div class="modal fade" th:id="'idModelDel' + ${category.id}" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Bạn chắc chắn muốn xóa ?</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Nhân viên : <span th:text="${category.fullName}"></span>
+                            <form th:action="@{/admin/employee-delete}" method="post">
+                              <input type="hidden" class="form-control" id="id" name="id" th:value="${category.id}">
+                              <div class="modal-footer" style="margin-top: 20px">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">
+                                  Close
+                                </button>
+                                <button type="submit" class="btn btn-danger">Xóa</button>
+
+                              </div>
+                            </form>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                &lt;!&ndash; Modal Update&ndash;&gt;
+                <div class="modal fade" th:id="'exampleModal'+${category.id}" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg ">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabell">Cập nhập</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form enctype="multipart/form-data" th:action="@{/admin/employee-update}" method="post">
+                          <input type="hidden" th:value="${category.id}" name="id">
+                          <div class="row">
+                            <div class="col-6">
+                              <label for="addname"
+                                     class="col-form-label">Họ và tên:</label>
+                              <input type="text" class="form-control"
+                                     id="addname" name="fullname" th:value="${category.fullName}" required>
+                            </div>
+                            <div class="col-6">
+                              <label for="addcost"
+                                     class="col-form-label">Email:</label>
+                              <input type="email" class="form-control"
+                                     id="addcost" name="email" th:value="${category.email}" required>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-6">
+                              <label for="addname"
+                                     class="col-form-label">Số điện thoại:</label>
+                              <input type="number" class="form-control"
+                                     id="addname" name="sdt" th:value="${category.phoneNumber}" required>
+                            </div>
+                            <div class="col-6">
+                              <label for="addcost"
+                                     class="col-form-label">Địa chỉ:</label>
+                              <input type="text" class="form-control"
+                                     id="addcost" name="diachi" th:value="${category.address}" required>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-6">
+                              <label for="addname"
+                                     class="col-form-label">Tài khoản:</label>
+                              <input type="text" class="form-control"
+                                     id="addname" name="taikhoan" th:value="${category.userName}" required>
+                            </div>
+                            <div class="col-6">
+                              <label for="addcost"
+                                     class="col-form-label">Mật khẩu:</label>
+                              <input type="password" class="form-control"
+                                     id="addcost" name="matkhau" th:value="${category.password}" required disabled>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save </button>
+                          </div>
+                        </form>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>-->
+                <!-- Modal Update-->
+
+              </th:block>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <script>
+
+      ClassicEditor.create(document.querySelector('#editor')).then(eidt => {
+        console.log("da" + eidt);
+      })
+              .catch(error => {
+                console.error(error);
+              });
+
+    </script>
+    <script>
+
+      var dodai = document.getElementById("dodai").value;
+      var a = parseInt(dodai);
+      for(var i = 1;i<=a+10;i++){
+        var name = "#editor"  + i
+        ClassicEditor.create(document.querySelector(name)).then(eidt => {
+          console.log("da" + eidt);
+        })
+                .catch(error => {
+                  console.error(error);
+                });
+      }
+
+
+    </script>
+    <footer th:replace="fragments :: footer" class="py-4 bg-light mt-auto">
+
+    </footer>
+  </div>
+</div>
+
+<script src="js/JQuery3.3.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+<script src="js/datatables-simple-demo.js"></script>
+</body>
+
+</html>
